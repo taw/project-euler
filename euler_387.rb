@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "prime"
+require "set"
 
 class Integer
   def digit_sum
@@ -38,20 +39,46 @@ class Integer
   end
 end
 
+def setup_rth(iterations)
+  known = (1..9).select(&:right_truncable_harshad?).to_set
+  level = 1
+
+  iterations.times do
+    level *= 10
+    next_known = Set[]
+    known.each do |truncation|
+      (0..9).each do |i|
+        candidate = truncation*10 + i
+        next_known << candidate if candidate.harshad?
+      end
+    end
+    known += next_known
+  end
+  known
+end
+
 def solution(max)
   e = 0
-  Prime.each do |prime|
-    break if prime > max
-    e += prime if prime.strong_right_truncatable_harshad_primes?
+  RightTruncableHarshad.each do |truncation|
+    next unless truncation.strong_harshad?
+    (0..9).each do |i|
+      num = truncation*10 + i
+      next if num > max
+      next unless num.prime?
+      e += num
+    end
   end
   e
 end
+
+RightTruncableHarshad = setup_rth(6)
 
 # p (1..1000).select(&:harshad?)
 # p (1..1000).select(&:right_truncable_harshad?)
 # p (1..1000).select(&:strong_harshad?)
 
-p (1..1000000).count(&:right_truncable_harshad?)
+p RightTruncableHarshad.count{|x| x <= 1000000 }
+
 p solution(10_000)
 p solution(1_000_000)
 
