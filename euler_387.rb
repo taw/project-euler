@@ -71,7 +71,7 @@ def solution(max)
   e
 end
 
-RightTruncableHarshad = setup_rth(6)
+RightTruncableHarshad = setup_rth(15)
 
 # p (1..1000).select(&:harshad?)
 # p (1..1000).select(&:right_truncable_harshad?)
@@ -81,11 +81,4 @@ p RightTruncableHarshad.count{|x| x <= 1000000 }
 
 p solution(10_000)
 p solution(1_000_000)
-
-
-__END__
-
-627
-90619
-1188721
-./euler_387.rb  1.59s user 0.13s system 86% cpu 1.980 total
+p solution(10**14)
