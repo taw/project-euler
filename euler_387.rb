@@ -4,7 +4,13 @@ require "prime"
 
 class Integer
   def digit_sum
-    to_s.chars.map(&:to_i).sum
+    i = self
+    e = 0
+    while i > 0
+      e += (i % 10)
+      i /= 10
+    end
+    e
   end
 
   def harshad?
@@ -32,12 +38,27 @@ class Integer
   end
 end
 
-p (1..1000).select(&:harshad?)
-p (1..1000).select(&:right_truncable_harshad?)
-p (1..1000).select(&:strong_harshad?)
+def solution(max)
+  e = 0
+  Prime.each do |prime|
+    break if prime > max
+    e += prime if prime.strong_right_truncatable_harshad_primes?
+  end
+  e
+end
+
+# p (1..1000).select(&:harshad?)
+# p (1..1000).select(&:right_truncable_harshad?)
+# p (1..1000).select(&:strong_harshad?)
+
+p (1..1000000).count(&:right_truncable_harshad?)
+p solution(10_000)
+p solution(1_000_000)
 
 
-p (1..10000).select(&:strong_right_truncatable_harshad_primes?).sum
+__END__
 
-
-# You are given that the sum of the strong, right truncatable Harshad primes less than 10000 is 90619.
+627
+90619
+1188721
+./euler_387.rb  1.59s user 0.13s system 86% cpu 1.980 total
