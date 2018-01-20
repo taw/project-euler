@@ -6,10 +6,18 @@ class Integer
   def bang
     (1..self).inject(1, &:*)
   end
+
+  def bang_mod(p)
+    a = 1
+    (2..self).each do |i|
+      a = (a*i) % p
+    end
+    a
+  end
 end
 
 def s(p)
-  a = (p-5).bang % p
+  a = (p-5).bang_mod(p)
   b = a*(p-4)
   c = b*(p-3)
   d = c*(p-2)
@@ -30,4 +38,4 @@ end
 p s(7)
 p es(100)
 
-p es(5000)
+p es(20000)
