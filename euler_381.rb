@@ -9,7 +9,12 @@ class Integer
 end
 
 def s(p)
-  (1..5).map{|k| (p-k).bang }.sum % p
+  a = (p-5).bang % p
+  b = a*(p-4)
+  c = b*(p-3)
+  d = c*(p-2)
+  e = d*(p-1)
+  (a+b+c+d+e) % p
 end
 
 def es(maxp)
@@ -25,4 +30,4 @@ end
 p s(7)
 p es(100)
 
-p es(2000)
+p es(5000)
